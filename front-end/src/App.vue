@@ -7,8 +7,8 @@
     <div class="div-input">
       <input
         type="text"
-        class="input-text"
-        placeholder="Digite uma nova tarefa"
+        :class="[{ 'class-erro': inputErro }, 'input-text']"
+        placeholder="Digite uma nova tarefa..."
         v-model="inputValue"
         v-on:keypress.enter="createNewTask"
       />
@@ -17,37 +17,30 @@
       </button>
     </div>
 
-    <div class="tasks-container">
-      <template v-for="task in allTasksSorted">
-        <CardTask :key="task.id" :task="task" v-on:updateFetch="getAllTasks()">
-          <button
-            type="button"
-            class="btn-close"
-            @click.stop="removeTask(task.id)"
-          >
-            X
-          </button>
-        </CardTask>
-      </template>
-    </div>
+    <GridTask
+      :tasks="allTasksSorted"
+      v-on:update-tasks="getAllTasks()"
+      v-on:remove-task="removeTask($event)"
+    ></GridTask>
   </div>
 </template>
 
 <script>
 import LoadBar from "./components/LoadBar.vue";
-import CardTask from "./components/CardTask.vue";
+import GridTask from "./components/GridTask.vue";
 import Fetch from "@/service/Fetch.js";
 
 export default {
   name: "App",
   components: {
     LoadBar,
-    CardTask,
+    GridTask,
   },
   data() {
     return {
       inputValue: "",
       allTasks: [],
+      inputErro: false,
     };
   },
   mounted() {
@@ -65,11 +58,19 @@ export default {
         });
         this.inputValue = "";
         await this.getAllTasks();
+      } else {
+        this.showError();
       }
     },
     async removeTask(id) {
       await Fetch.remove("/" + id);
       await this.getAllTasks();
+    },
+    showError() {
+      this.inputErro = true;
+      setTimeout(() => {
+        this.inputErro = false;
+      }, 1000);
     },
     validateNewTask(value) {
       const alredyHave =
@@ -78,7 +79,6 @@ export default {
       return true;
     },
   },
-
   computed: {
     loadBarWidth() {
       if (this.allTasks.length === 0) return 0;
@@ -103,7 +103,6 @@ body {
   font-family: "Chelsea Market", cursive;
   color: #fff;
   width: 100%;
-
   height: 100vh;
 }
 #app {
@@ -112,7 +111,6 @@ body {
   justify-content: flex-start;
   padding-top: 5rem;
   align-items: center;
-  width: 100%;
 }
 .title {
   font-size: 4.5rem;
@@ -127,26 +125,27 @@ button {
   outline: none;
   cursor: pointer;
 }
+
 .btn-append {
+  position: absolute;
   height: 65px;
   width: 65px;
   right: -10px;
-  color: #fff;
   font-size: 1.5rem;
+  color: #fff;
   background-color: #2f66fb;
-  border: #e6e6e6 solid 4px;
+  border: #e6e6e6 solid 6px;
   border-radius: 50px;
-  position: absolute;
   transition: all 400ms;
 }
 .btn-append:hover {
   color: #fff;
-  border: #1ccf52 solid 8px;
-  background-color: #5885ff;
+  background-color: #5482ff;
   transform: rotate(180deg);
+  transition: all 400ms;
 }
 .btn-append:active {
-  border: #1ccf52 solid 4px;
+  border: #1ccf52 solid 8px;
   color: #1ccf52;
   background-color: #ffffff;
   transition: all 100ms;
@@ -163,15 +162,13 @@ button {
   outline: none;
 }
 .input-text::placeholder {
-  color: white;
+  color: rgba(255, 255, 255, 0.616);
 }
-.tasks-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-  align-items: center;
-  margin: 1.5rem;
-  transition: all 500ms;
+.class-erro {
+  border-color: #ca2b2b;
+  transition: all 200ms;
+}
+.class-erro::placeholder {
+  transition: all 200ms;
 }
 </style>

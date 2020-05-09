@@ -1,7 +1,7 @@
 <template>
-  <div class="LoadBar">
-    <span class="bar-text">{{ RoundedWidth }}%</span>
-    <div class="barLoaded" :style="returnWidth"></div>
+  <div class="loadbar">
+    <span class="loadbar-text">{{ RoundedWidth }}%</span>
+    <div class="loadbar-content" :style="returnWidth"></div>
   </div>
 </template>
 
@@ -24,25 +24,25 @@ export default {
 </script>
 
 <style scoped>
-.LoadBar {
+.loadbar {
+  position: relative;
   height: 70px;
   width: 80%;
-  border: #e6e6e6 3px solid;
-  overflow: hidden;
   margin: 2rem 0;
   border-radius: 14px;
-  position: relative;
+  border: #e6e6e6 3px solid;
+  overflow: hidden;
 }
-.bar-text {
+.loadbar-text {
   position: absolute;
-  font-size: 1.5rem;
   top: 50%;
   left: 50%;
+  font-size: 1.5rem;
   transform: translate(-50%, -50%);
 }
-.barLoaded {
+.loadbar-content {
   background: #0fb440;
-  height: 75px;
+  height: 100%;
   transition: all 400ms ease;
 }
 </style>

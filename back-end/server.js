@@ -61,6 +61,13 @@ server.put("/:id", (req, res) => {
 });
 
 server.delete("/:id", (req, res) => {
+  db.query("SELECT * FROM tasks", (err, result) => {
+    if (err) return res.send("GET - Erro no banco de dados.");
+    const tasks = result.rows;
+    if (tasks.length == 1)
+      db.query("ALTER SEQUENCE tasks_id_seq RESTART WITH 1");
+  });
+
   db.query(
     `DELETE FROM tasks
     WHERE id = ${req.params.id};`,
