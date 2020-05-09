@@ -10,9 +10,9 @@
         class="input-text"
         placeholder="Digite uma nova tarefa"
         v-model="inputValue"
-        v-on:keypress.enter="addNewTask"
+        v-on:keypress.enter="createNewTask"
       />
-      <button type="button" class="btn-append" @click="addNewTask">
+      <button type="button" class="btn-append" @click="createNewTask">
         +
       </button>
     </div>
@@ -36,7 +36,7 @@
 <script>
 import LoadBar from "./components/LoadBar.vue";
 import CardTask from "./components/CardTask.vue";
-// import Fetch from "@/service/Fetch.js";
+import Fetch from "@/service/Fetch.js";
 
 export default {
   name: "App",
@@ -48,7 +48,6 @@ export default {
     return {
       inputValue: "",
       allTasks: [],
-      baseURL: "http://127.0.0.1:1414/",
     };
   },
   mounted() {
@@ -56,34 +55,27 @@ export default {
   },
   methods: {
     async getAllTasks() {
-      fetch(this.baseURL)
-        .then((res) => res.json())
-        .then((data) => {
-          this.allTasks = [...data];
-        });
+      this.allTasks = await Fetch.get("/");
     },
-    addNewTask() {
-      if (this.validateNewTask(this.inputValue)) {
-        fetch(this.baseURL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: this.inputValue, state: false }),
-        }).then(() => this.getAllTasks());
+    async createNewTask() {
+      if (await this.validateNewTask(this.inputValue)) {
+        await Fetch.create("/", {
+          text: this.inputValue,
+          state: false,
+        });
         this.inputValue = "";
+        await this.getAllTasks();
       }
     },
-    removeTask(id) {
-      console.log("deleting...");
-      fetch(this.baseURL + id, {
-        method: "delete",
-      }).then(() => this.getAllTasks());
+    async removeTask(id) {
+      await Fetch.remove("/" + id);
+      await this.getAllTasks();
     },
     validateNewTask(value) {
       const alredyHave =
         this.allTasks.find((task) => task.text == value) != undefined;
-      return value == "" || !alredyHave;
+      if (value == "" || alredyHave) return false;
+      return true;
     },
   },
 

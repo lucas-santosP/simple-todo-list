@@ -27,49 +27,48 @@ server.get("/", (req, res) => {
 });
 
 server.post("/", (req, res) => {
-  const taskText = req.body.text;
-  const taskState = req.body.state;
+  const newTask = {
+    text: req.body.text,
+    state: req.body.state,
+  };
 
   const query = `INSERT INTO tasks ("text", "state") 
-  VALUES ('${taskText}', '${taskState}')`;
+  VALUES ('${newTask.text}', '${newTask.state}')`;
+
   db.query(query, (err) => {
     if (err) return res.send("POST - Erro no banco de dados.");
-    return res.send("New task saved!");
+
+    return res.send(newTask);
   });
 });
 
-server.put("/:id&:state", (req, res) => {
-  const taskId = req.params.id;
-  const taskState = req.params.state;
+server.put("/:id", (req, res) => {
+  const task = {
+    id: req.body.state,
+    state: req.params.id,
+  };
 
   db.query(
     `UPDATE tasks
-    SET state= '${taskState}'
-    WHERE id = ${taskId};`,
+    SET state= '${task.id}'
+    WHERE id = ${task.state};`,
     (err) => {
       if (err) return res.send("PUT - Erro no banco de dados.");
 
-      return res.send("Arquivo atualizado!");
+      return res.send(task);
     }
   );
 });
 
 server.delete("/:id", (req, res) => {
-  db.query("SELECT * FROM tasks", (err, result) => {
-    if (err) return res.send("GET - Erro no banco de dados.");
-    const tasks = result.rows;
-    if (tasks.length == 1)
-      db.query("ALTER SEQUENCE tasks_id_seq RESTART WITH 1");
-  });
-  const taskId = req.params.id;
-
+  // db.query("ALTER SEQUENCE tasks_id_seq RESTART WITH 1");
   db.query(
     `DELETE FROM tasks
-    WHERE id = ${taskId};`,
+    WHERE id = ${req.params.id};`,
     (err) => {
       if (err) return res.send("DELETE - Erro no banco de dados.");
 
-      return res.send("Arquivo atualizado!");
+      return res.send({ test: "dfas" });
     }
   );
 });

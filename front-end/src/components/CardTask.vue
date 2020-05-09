@@ -6,23 +6,25 @@
   >
     <slot></slot>
     <div class="card-body">
-      <p class="card-text">{{ task.text }}</p>
+      <p class="card-text">{{ task.text }} - {{ task.id }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import Fetch from "@/service/Fetch.js";
+
 export default {
   name: "CardTask",
   props: {
     task: Object,
   },
   methods: {
-    changeState() {
-      console.log("Change state...");
-      fetch("http://127.0.0.1:1414/" + this.task.id + "&" + !this.task.state, {
-        method: "put",
-      }).then(() => this.$emit("updateFetch"));
+    async changeState() {
+      await Fetch.update("/" + this.task.id, {
+        state: !this.task.state,
+      });
+      await this.$emit("updateFetch");
     },
   },
 };

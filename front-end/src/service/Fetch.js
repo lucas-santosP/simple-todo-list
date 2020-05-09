@@ -1,27 +1,27 @@
-const baseURL = "http://127.0.0.1:1414/";
+const baseURL = "http://127.0.0.1:1414";
 
-function get(url = "", params) {
+function get(url, params) {
   return request(url, params);
 }
-function create(url = "", params) {
+function create(url, params) {
   return request(url, params, "POST");
 }
-function update(url = "", params) {
+function update(url, params) {
   return request(url, params, "PUT");
 }
-function remove(url = "", params) {
+function remove(url, params) {
   return request(url, params, "DELETE");
 }
 
 async function request(url, params, method = "GET") {
   const options = {
-    method,
     headers: {
       "Content-Type": "application/json", // we will be sending JSON
     },
+    method,
   };
 
-  if (params) {
+  if (params != undefined) {
     if (method === "GET") {
       url += "?" + objectToQueryString(params);
     } else {

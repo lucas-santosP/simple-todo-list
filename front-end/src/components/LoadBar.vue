@@ -43,6 +43,6 @@ export default {
 .barLoaded {
   background: #0fb440;
   height: 75px;
-  transition: all 600ms linear;
+  transition: all 400ms ease;
 }
 </style>
