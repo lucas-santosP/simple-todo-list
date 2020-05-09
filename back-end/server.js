@@ -61,7 +61,6 @@ server.put("/:id", (req, res) => {
 });
 
 server.delete("/:id", (req, res) => {
-  // db.query("ALTER SEQUENCE tasks_id_seq RESTART WITH 1");
   db.query(
     `DELETE FROM tasks
     WHERE id = ${req.params.id};`,
