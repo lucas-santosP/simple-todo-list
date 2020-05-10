@@ -43,7 +43,7 @@ export default {
       inputErro: false,
     };
   },
-  mounted() {
+  created() {
     this.getAllTasks();
   },
   methods: {
