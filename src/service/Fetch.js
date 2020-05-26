@@ -19,7 +19,6 @@ async function request(url, params, method) {
       "Content-Type": "application/json", // we will be sending JSON
     },
     method,
-    mode: "cors",
   };
 
   if (params != undefined) {
