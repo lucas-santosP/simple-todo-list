@@ -48,11 +48,11 @@ export default {
   },
   methods: {
     async getAllTasks() {
-      this.allTasks = await Fetch.get("/");
+      this.allTasks = await Fetch.get("/tasks");
     },
     async createNewTask() {
       if (await this.validateNewTask(this.inputValue)) {
-        await Fetch.create("/", {
+        await Fetch.create("/tasks", {
           text: this.inputValue,
           state: false,
         });
@@ -63,7 +63,7 @@ export default {
       }
     },
     async removeTask(id) {
-      await Fetch.remove("/" + id);
+      await Fetch.remove("/tasks/" + id);
       await this.getAllTasks();
     },
     showError() {
@@ -75,7 +75,7 @@ export default {
     validateNewTask(value) {
       const alredyHave =
         this.allTasks.find((task) => task.text == value) != undefined;
-      if (value == "" || alredyHave) return false;
+      if (value === "" || alredyHave) return false;
       return true;
     },
   },

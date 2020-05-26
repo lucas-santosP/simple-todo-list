@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async changeState(task) {
-      await Fetch.update("/" + task.id, {
+      await Fetch.update("/tasks/" + task.id, {
         state: !task.state,
       });
       await this.$emit("update-tasks");
