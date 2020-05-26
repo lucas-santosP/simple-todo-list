@@ -1,7 +1,7 @@
 const baseURL = "http://127.0.0.1:1414";
 
 function get(url, params) {
-  return request(url, params);
+  return request(url, params, "GET");
 }
 function create(url, params) {
   return request(url, params, "POST");
@@ -13,12 +13,13 @@ function remove(url, params) {
   return request(url, params, "DELETE");
 }
 
-async function request(url, params, method = "GET") {
+async function request(url, params, method) {
   const options = {
     headers: {
       "Content-Type": "application/json", // we will be sending JSON
     },
     method,
+    mode: "cors",
   };
 
   if (params != undefined) {
