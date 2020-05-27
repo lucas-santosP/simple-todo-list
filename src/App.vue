@@ -82,6 +82,7 @@ export default {
   computed: {
     loadBarWidth() {
       if (this.allTasks.length === 0) return 0;
+
       let completedTasks = this.allTasks.filter((task) => task.state);
       return (completedTasks.length / this.allTasks.length) * 100;
     },

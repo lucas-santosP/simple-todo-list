@@ -1,7 +1,7 @@
 <template>
   <div class="loadbar">
     <span class="loadbar-text">{{ RoundedWidth }}%</span>
-    <div class="loadbar-content" :style="returnWidth"></div>
+    <div class="loadbar-content" :style="loadProgressWidth"></div>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   },
 
   computed: {
-    returnWidth() {
+    loadProgressWidth() {
       return `width: ${this.loadBarWidth}%`;
     },
     RoundedWidth() {
