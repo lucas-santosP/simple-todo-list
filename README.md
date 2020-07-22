@@ -1,6 +1,6 @@
 # Simple Todo list
 
-![Design preview Todo List](./demo-img.png)
+![Design preview Todo List](./demo-img.PNG)
 
 ## Build With
 
