@@ -4,9 +4,9 @@
 
 ## Build With
 
-- Vue
-- Express
-- Postgress
+- [Vue](https://vuejs.org) - A progressive, incrementally-adoptable JavaScript framework for UI on the web.
+- [Express](https://expressjs.com) - A minimal and flexible Node.js web application framework.
+- [PostgreSQL](https://www.google.com/search?client=opera&q=PostgreSQL&sourceid=opera&ie=UTF-8&oe=UTF-8) - A powerful, open source object-relational database system.
 
 ## Installation
 
@@ -14,6 +14,7 @@ Running the backend server:
 
 ```
 cd frontend
+
 npm install
 npm run dev
 ```
