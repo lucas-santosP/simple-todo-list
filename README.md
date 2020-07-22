@@ -4,22 +4,21 @@
 
 ## Build With
 
-- [Vue](https://vuejs.org) - A progressive, incrementally-adoptable JavaScript framework for UI on the web.
-- [Express](https://expressjs.com) - A minimal and flexible Node.js web application framework.
-- [PostgreSQL](https://www.google.com/search?client=opera&q=PostgreSQL&sourceid=opera&ie=UTF-8&oe=UTF-8) - A powerful, open source object-relational database system.
+- [Vue](https://vuejs.org)
+- [Express](https://expressjs.com)
+- [PostgreSQL](https://www.google.com/search?client=opera&q=PostgreSQL&sourceid=opera&ie=UTF-8&oe=UTF-8)
 
-## Installation
+## Instalação
 
-Running the backend server:
+Rodando servidor backend:
 
 ```
 cd frontend
-
 npm install
 npm run dev
 ```
 
-And then running de frontend:
+E depois inciando localhost frontend:
 
 ```
 cd backend
@@ -29,4 +28,4 @@ npm run serve
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE.md file for details
+Distribuído sob a licença MIT. Veja LICENSE.md para mais informações.
